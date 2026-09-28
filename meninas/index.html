@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BemPerto | Encontre o cuidado</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+</head>
+
+<body>
+
+    <section id="loginScreen" class="login-screen">
+
+        <div class="login-card">
+
+            <div class="logo-area">
+                <img class="brand-mark" src="assets/logo.meninas.png" alt="Logo BemPerto" />
+
+                <h1 class="brand-wordmark">
+                    <span>Bem</span><strong>Perto</strong>
+                </h1>
+
+                <p>ENCONTRE O CUIDADO.</p>
+            </div>
+
+            <h2>Entrar</h2>
+
+            <p class="login-description">
+                Acesse sua área de saúde.
+            </p>
+
+            <form id="loginForm">
+
+                <label for="username">
+                    Usuário
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="Digite seu usuário"
+                    autocomplete="username"
+                    required
+                >
+
+                <label for="password">
+                    Senha
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Digite sua senha"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button type="submit" class="primary-button">
+                    Entrar
+                </button>
+
+            </form>
+
+            <p id="loginError" class="error-message"></p>
+
+            <div class="demo-account">
+                <strong>Conta demonstrativa</strong>
+                <span>Usuário: BP-0001</span>
+                <span>Senha: bemperto123</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         APLICAÇÃO
+    ========================== -->
+
+    <section id="app" class="app hidden">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+
+                <img class="brand-mark small" src="assets/logo.meninas.png" alt="Logo BemPerto mini" />
+
+                <div>
+                    <h2>
+                        <span>Bem</span><strong>Perto</strong>
+                    </h2>
+
+                    <small>
+                        Encontre o cuidado.
+                    </small>
+                </div>
+
+            </div>
+
+
+            <nav>
+
+                <button class="menu-item active" data-page="home">
+                    Início
+                </button>
+
+                <button class="menu-item" data-page="mapa">
+                    Mapa
+                </button>
+
+                <button class="menu-item" data-page="agendamento">
+                    Agendamento
+                </button>
+
+                <button class="menu-item" data-page="atendimento">
+                    Atendimento domiciliar
+                </button>
+
+                <button class="menu-item" data-page="ia">
+                    BemPerto IA
+                </button>
+
+                <button class="menu-item" data-page="consultas">
+                    Meus agendamentos
+                </button>
+
+                <button class="menu-item" data-page="perfil">
+                    Meu perfil
+                </button>
+
+            </nav>
+
+
+            <button id="logoutButton" class="logout-button">
+                ↪ Sair
+            </button>
+
+        </aside>
+
+
+        <!-- CONTEÚDO -->
+
+        <main class="main-content">
+
+            <!-- =========================
+                 HOME
+            ========================== -->
+
+            <section id="page-home" class="page active-page">
+
+                <header class="topbar">
+
+                    <button id="mobileMenuButton" class="mobile-menu">
+                        ☰
+                    </button>
+
+                    <div>
+                        <h1>Olá, Brenda! 👋</h1>
+
+                        <p>
+                            Como podemos ajudar você hoje?
+                        </p>
+                    </div>
+
+                    <div class="notification">
+                        🔔
+                    </div>
+
+                </header>
+
+
+                <div class="welcome-card">
+
+                    <div>
+
+                        <span class="welcome-label">
+                            SEU CUIDADO EM UM SÓ LUGAR
+                        </span>
+
+                        <h2>
+                            Saúde mais próxima,
+                            simples e acessível.
+                        </h2>
+
+                        <p>
+                            Encontre serviços de saúde,
+                            agende atendimentos e tire
+                            suas dúvidas.
+                        </p>
+
+                    </div>
+
+                    <div class="welcome-symbol">
+                        ❤️
+                    </div>
+
+                </div>
+
+
+                <div class="quick-grid">
+
+                    <button class="quick-card" data-page="mapa">
+
+                        <div class="quick-icon blue">
+                            📍
+                        </div>
+
+                        <h3>Locais de saúde</h3>
+
+                        <p>
+                            Encontre hospitais,
+                            UBS e farmácias.
+                        </p>
+
+                    </button>
+
+
+                    <button class="quick-card" data-page="agendamento">
+
+                        <div class="quick-icon green">
+                            📅
+                        </div>
+
+                        <h3>Agendamento</h3>
+
+                        <p>
+                            Agende sua consulta.
+                        </p>
+
+                    </button>
+
+
+                    <button class="quick-card" data-page="atendimento">
+
+                        <div class="quick-icon orange">
+                            🏠
+                        </div>
+
+                        <h3>Em casa</h3>
+
+                        <p>
+                            Solicite atendimento
+                            domiciliar.
+                        </p>
+
+                    </button>
+
+
+                    <button class="quick-card" data-page="ia">
+
+                        <div class="quick-icon purple">
+                            🤖
+                        </div>
+
+                        <h3>BemPerto IA</h3>
+
+                        <p>
+                            Tire suas dúvidas
+                            sobre saúde.
+                        </p>
+
+                    </button>
+
+                </div>
+
+
+                <div class="section-title">
+
+                    <div>
+                        <h2>Próximo atendimento</h2>
+
+                        <p>
+                            Acompanhe seu compromisso.
+                        </p>
+                    </div>
+
+                    <button
+                        class="text-button"
+                        data-page="consultas"
+                    >
+                        Ver todos
+                    </button>
+
+                </div>
+
+
+                <div id="nextAppointment" class="appointment-preview">
+
+                </div>
+
+
+                <div class="health-banner">
+
+                    <div class="health-banner-icon">
+                        🛡️
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Cuidado personalizado
+                        </h3>
+
+                        <p>
+                            O BemPerto foi pensado para
+                            facilitar o acompanhamento
+                            de pessoas que precisam de
+                            cuidados contínuos.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                            </section>
+
+
+            <!-- =========================
+                 MAPA
+            ========================== -->
+
+            <section id="page-mapa" class="page">
+
+                <header class="page-header">
+
+                    <div>
+                        <h1>Mapa de saúde</h1>
+
+                        <p>
+                            Encontre serviços de saúde
+                            em Caçador - SC.
+                        </p>
+                    </div>
+
+                </header>
+
+
+                <div class="map-controls">
+
+                    <button class="filter active" data-filter="todos">
+                        Todos
+                    </button>
+
+                    <button class="filter" data-filter="hospital">
+                        🏥 Hospitais
+                    </button>
+
+                    <button class="filter" data-filter="ubs">
+                        🏥 UBS
+                    </button>
+
+                    <button class="filter" data-filter="farmacia">
+                        💊 Farmácias
+                    </button>
+
+                </div>
+
+
+                <div class="map-layout">
+
+                    <div id="map"></div>
+
+                    <div class="locations-list">
+
+                        <h2>
+                            Locais encontrados
+                        </h2>
+
+                        <div id="locationsContainer">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 AGENDAMENTO
+            ========================== -->
+
+            <section id="page-agendamento" class="page">
+
+                <header class="page-header">
+
+                    <div>
+                        <h1>Agendamento</h1>
+
+                        <p>
+                            Escolha o atendimento que
+                            você precisa.
+                        </p>
+                    </div>
+
+                </header>
+
+
+                <div class="steps">
+
+                    <div class="step active">
+                        <span>1</span>
+                        Serviço
+                    </div>
+
+                    <div class="step">
+                        <span>2</span>
+                        Profissional
+                    </div>
+
+                    <div class="step">
+                        <span>3</span>
+                        Data e hora
+                    </div>
+
+                    <div class="step">
+                        <span>4</span>
+                        Confirmação
+                    </div>
+
+                </div>
+
+
+                <div class="booking-card">
+
+                    <div id="bookingStep1">
+
+                        <h2>
+                            O que você precisa?
+                        </h2>
+
+                        <p class="muted">
+                            Escolha o tipo de atendimento.
+                        </p>
+
+
+                        <div class="service-grid">
+
+                            <button
+                                class="service-option"
+                                data-service="Consulta médica"
+                            >
+
+                                <span>🩺</span>
+
+                                <strong>
+                                    Consulta médica
+                                </strong>
+
+                                <small>
+                                    Atendimento com profissional
+                                    de saúde.
+                                </small>
+
+                            </button>
+
+
+                            <button
+                                class="service-option"
+                                data-service="Atendimento farmacêutico"
+                            >
+
+                                <span>💊</span>
+
+                                <strong>
+                                    Atendimento farmacêutico
+                                </strong>
+
+                                <small>
+                                    Orientações relacionadas
+                                    aos medicamentos.
+                                </small>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div id="bookingStep2" class="hidden">
+
+                        <h2>
+                            Escolha o profissional
+                        </h2>
+
+                        <p class="muted">
+                            Profissionais disponíveis
+                            para demonstração.
+                        </p>
+
+                        <div id="professionalsContainer"
+                             class="professionals">
+
+                        </div>
+
+                    </div>
+
+
+                    <div id="bookingStep3" class="hidden">
+
+                        <h2>
+                            Escolha data e horário
+                        </h2>
+
+                        <p class="muted">
+                            Selecione um horário disponível.
+                        </p>
+
+                        <div class="date-time-grid">
+
+                            <div>
+
+                                <label>
+                                    Data
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="appointmentDate"
+                                >
+
+                            </div>
+
+
+                            <div>
+
+                                <label>
+                                    Horário
+                                </label>
+
+                                <select id="appointmentTime">
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option>
+                                        08:00
+                                    </option>
+
+                                    <option>
+                                        09:00
+                                    </option>
+
+                                    <option>
+                                        10:00
+                                    </option>
+
+                                    <option>
+                                        14:00
+                                    </option>
+
+                                    <option>
+                                        15:00
+                                    </option>
+
+                                    <option>
+                                        16:00
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <div class="info-box">
+                            ℹ️ O cancelamento pode ser
+                            realizado até 24 horas antes
+                            do atendimento.
+                        </div>
+
+                        <button
+                            id="continueBooking"
+                            class="primary-button"
+                        >
+                            Continuar
+                        </button>
+
+                    </div>
+
+
+                    <div id="bookingStep4" class="hidden">
+
+                        <h2>
+                            Confirmar agendamento
+                        </h2>
+
+                        <div
+                            id="bookingSummary"
+                            class="summary"
+                        >
+                        </div>
+
+                        <div class="confirmation-actions">
+
+                            <button
+                                id="backBooking"
+                                class="secondary-button"
+                            >
+                                Voltar
+                            </button>
+
+                            <button
+                                id="confirmBooking"
+                                class="primary-button"
+                            >
+                                Confirmar agendamento
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 ATENDIMENTO DOMICILIAR
+            ========================== -->
+
+            <section id="page-atendimento" class="page">
+
+                <header class="page-header">
+
+                    <div>
+                        <h1>Atendimento domiciliar</h1>
+
+                        <p>
+                            Quando ir até um serviço de saúde
+                            não é uma opção, o cuidado pode
+                            chegar até você.
+                        </p>
+                    </div>
+
+                </header>
+
+
+                <div class="home-care-card">
+
+                    <div class="home-care-icon">
+                        🏠
+                    </div>
+
+                    <h2>
+                        Solicite atendimento em casa
+                    </h2>
+
+                    <p>
+                        O serviço é destinado a pacientes
+                        que, por suas condições de saúde
+                        ou dificuldade de locomoção,
+                        precisam de acompanhamento
+                        domiciliar.
+                    </p>
+
+                </div>
+
+
+                <form id="homeCareForm"
+                      class="form-card">
+
+                    <label>
+                        Tipo de profissional
+                    </label>
+
+                    <select id="homeCareProfessional">
+
+                        <option>
+                            Médico
+                        </option>
+
+                        <option>
+                            Farmacêutico
+                        </option>
+
+                    </select>
+
+
+                    <label>
+                        Motivo da solicitação
+                    </label>
+
+                    <textarea
+                        id="homeCareReason"
+                        placeholder="Descreva brevemente o motivo..."
+                        required
+                    ></textarea>
+
+
+                    <label>
+                        Data desejada
+                    </label>
+
+                    <input
+                        type="date"
+                        id="homeCareDate"
+                        required
+                    >
+
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        Solicitar atendimento
+                    </button>
+
+                </form>
+
+
+                <div
+                    id="homeCareMessage"
+                    class="success-message hidden"
+                >
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 IA
+            ========================== -->
+
+            <section id="page-ia" class="page">
+
+                <header class="page-header">
+
+                    <div>
+                        <h1>BemPerto IA 🤖</h1>
+
+                        <p>
+                            Um assistente para ajudar você
+                            a encontrar informações de saúde.
+                        </p>
+                    </div>
+
+                </header>
+
+
+                <div class="ai-card">
+
+                    <div class="ai-header">
+
+                        <div class="ai-avatar">
+                            🤖
+                        </div>
+
+                        <div class="ai-title-wrap">
+
+                            <div class="ai-status">
+                                <span class="status-dot"></span>
+                                Online agora
+                            </div>
+
+                            <h2>
+                                Olá! Eu sou a BemPerto IA.
+                            </h2>
+
+                            <p>
+                                Posso orientar sobre agendamentos,
+                                locais e atendimento.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div id="chatMessages"
+                         class="chat-messages"
+                         aria-live="polite"
+                         aria-atomic="true">
+
+                        <div class="chat-message ai">
+                            Olá! Posso ajudar você a
+                            encontrar hospitais, UBS,
+                            farmácias e informações sobre
+                            os serviços disponíveis.
+                        </div>
+
+                    </div>
+
+
+                    <div class="quick-questions">
+
+                        <button
+                            data-question="Qual hospital fica mais perto?"
+                        >
+                            🏥 Hospital mais próximo
+                        </button>
+
+                        <button
+                            data-question="Onde encontro uma farmácia?"
+                        >
+                            💊 Farmácia
+                        </button>
+
+                        <button
+                            data-question="Quero marcar uma consulta."
+                        >
+                            📅 Agendamento
+                        </button>
+
+                        <button
+                            data-question="Preciso de atendimento em casa."
+                        >
+                            🏠 Atendimento em casa
+                        </button>
+
+                    </div>
+
+
+                    <form id="chatForm"
+                          class="chat-input">
+
+                        <input
+                            type="text"
+                            id="chatInput"
+                            placeholder="Digite sua dúvida..."
+                            required
+                        >
+
+                        <button type="submit">
+                            ➤
+                        </button>
+
+                    </form>
+
+                    <div class="ai-warning">
+                        ⚠️ A BemPerto IA é um recurso
+                        informativo e não substitui
+                        avaliação de um profissional
+                        de saúde.
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 AGENDAMENTOS
+            ========================== -->
+
+            <section id="page-consultas" class="page">
+
+                <header class="page-header">
+
+                    <div>
+                        <h1>Meus agendamentos</h1>
+
+                        <p>
+                            Acompanhe suas consultas
+                            e atendimentos.
+                        </p>
+                    </div>
+
+                </header>
+
+
+                <div id="appointmentsContainer">
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 PERFIL
+            ========================== -->
+
+            <section id="page-perfil" class="page">
+
+                <header class="page-header">
+
+                    <div>
+                        <h1>Meu perfil</h1>
+
+                        <p>
+                            Informações do usuário
+                            demonstrativo.
+                        </p>
+                    </div>
+
+                </header>
+
+
+                <div class="profile-card">
+
+                    <div class="profile-avatar">
+                        <img src="assets/brenda.jpeg" alt="Foto de perfil de Brenda da Silva">
+                    </div>
+
+                    <h2>
+                        Brenda
+                    </h2>
+
+                    <span class="profile-id">
+                        Usuária BemPerto • BP-0001
+                    </span>
+
+
+                    <div class="profile-info">
+
+                        <div>
+                            <span>📧</span>
+
+                            <div>
+                                <small>Email</small>
+                                <strong>
+                                    brenda.@example.com
+                                </strong>
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <span>📱</span>
+
+                            <div>
+                                <small>Telefone</small>
+                                <strong>
+                                    (49) 99999-0000
+                                </strong>
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <span>📍</span>
+
+                            <div>
+                                <small>Cidade</small>
+                                <strong>
+                                    Caçador - SC
+                                </strong>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="condition-box">
+
+                        <strong>
+                            Perfil de acompanhamento
+                        </strong>
+
+                        <p>
+                            Diabetes tipo 2
+                        </p>
+
+                        <small>
+                            Informação ilustrativa para
+                            demonstração do projeto.
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </section>
+
+
+    <!-- LEAFLET -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
